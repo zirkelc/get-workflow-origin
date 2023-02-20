@@ -1,0 +1,16 @@
+name: "On Comment"
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  comment:
+    name: Comment
+    if: github.event.issue.pull_request && contains(github.event.comment.body, '/comment')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Hello
+        run: |
+          echo "Hello World!"
