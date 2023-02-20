@@ -9,6 +9,7 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
+- [Get Workflow Origin action](#get-workflow-origin-action)
 - [Context and motivation](#context-and-motivation)
 - [Inputs and outputs](#inputs-and-outputs)
   - [Inputs](#inputs)
@@ -43,24 +44,24 @@ be set to `${{ github.event.workflow_run.id }}` in case of the `workflow_run` ev
 
 ## Inputs
 
-| Input                   | Required | Default      | Comment                                                                                                                                                                                                          |
-|-------------------------|----------|--------------|-----------------------------------------------------------------------------------------------------|
-| `token`                 | yes      |              | The github token passed from `${{ secrets.GITHUB_TOKEN }}`                                          |
-| `sourceRunId`           | no       |              | In case of 'workflow_run' event it should be set to `${{ github.event.workflow_run.id }}`           |
+| Input         | Required | Default | Comment                                                                                   |
+| ------------- | -------- | ------- | ----------------------------------------------------------------------------------------- |
+| `token`       | yes      |         | The github token passed from `${{ secrets.GITHUB_TOKEN }}`                                |
+| `sourceRunId` | no       |         | In case of 'workflow_run' event it should be set to `${{ github.event.workflow_run.id }}` |
 
 ## Outputs
 
-| Output               | No `sourceRunId` specified                                                          | The `sourceRunId` set to `${{ github.event.workflow_run.id }}`                                        |
-|----------------------|-------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------|
-| `sourceHeadRepo`     | Current repository. Format: `owner/repo`                                            | Repository of the run that triggered this `workflow_run`. Format: `owner/repo`                        |
-| `sourceHeadBranch`   | Current branch.                                                                     | Branch of the run that triggered this `workflow_run`. Might be forked repo, if it is a pull_request.  |
-| `sourceHeadSha`      | Current commit SHA: `{{ github.sha }}`                                              | Commit sha of the run that triggered this `workflow_run`.                                             |
-| `mergeCommitSha`     | Merge commit SHA if PR-triggered event.                                             | Merge commit SHA if PR-triggered event.                                                               |
-| `targetCommitSha`    | Target commit SHA (merge if present, otherwise source).                             | Target commit SHA (merge if present, otherwise source).                                               |
-| `pullRequestNumber`  | Number of the associated Pull Request (if PR triggered)                             | Number of the associated Pull Request (if PR triggered)                                               |
-| `pullRequestLabels`  | Stringified JSON array of Labels of the associated Pull Request (if PR triggered)   | Stringified JSON array of Labels of the associated Pull Request (if PR triggered)                     |
-| `targetBranch`       | Target branch of the pull request or target branch for push                         | Target branch of the pull request or target branch for push                                           |
-| `sourceEvent`        | Current event: ``${{ github.event }}``                                              | Event of the run that triggered this `workflow_run`                                                   |
+| Output              | No `sourceRunId` specified                                                        | The `sourceRunId` set to `${{ github.event.workflow_run.id }}`                                       |
+| ------------------- | --------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `sourceHeadRepo`    | Current repository. Format: `owner/repo`                                          | Repository of the run that triggered this `workflow_run`. Format: `owner/repo`                       |
+| `sourceHeadBranch`  | Current branch.                                                                   | Branch of the run that triggered this `workflow_run`. Might be forked repo, if it is a pull_request. |
+| `sourceHeadSha`     | Current commit SHA: `{{ github.sha }}`                                            | Commit sha of the run that triggered this `workflow_run`.                                            |
+| `mergeCommitSha`    | Merge commit SHA if PR-triggered event.                                           | Merge commit SHA if PR-triggered event.                                                              |
+| `targetCommitSha`   | Target commit SHA (merge if present, otherwise source).                           | Target commit SHA (merge if present, otherwise source).                                              |
+| `pullRequestNumber` | Number of the associated Pull Request (if PR triggered)                           | Number of the associated Pull Request (if PR triggered)                                              |
+| `pullRequestLabels` | Stringified JSON array of Labels of the associated Pull Request (if PR triggered) | Stringified JSON array of Labels of the associated Pull Request (if PR triggered)                    |
+| `targetBranch`      | Target branch of the pull request or target branch for push                       | Target branch of the pull request or target branch for push                                          |
+| `sourceEvent`       | Current event: ``${{ github.event }}``                                            | Event of the run that triggered this `workflow_run`                                                  |
 
 # Examples
 
@@ -124,7 +125,7 @@ jobs:
         id: source-run-info
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          sourceRunId: ${{ github.event.workflow_run.id }}```
+          sourceRunId: ${{ github.event.workflow_run.id }}
 ```
 
 
