@@ -54,7 +54,7 @@ async function findPullRequest(
     if (pullRequest.head.sha === headSha) {
       core.info(
         `\nFound PR: ${pullRequest.number}. ` +
-          `Url: https://api.github.com/repos/${owner}/${repo}/pulls/${pullRequest.number}\n`
+        `Url: https://api.github.com/repos/${owner}/${repo}/pulls/${pullRequest.number}\n`
       )
       return pullRequest
     }
@@ -89,13 +89,14 @@ async function getOrigin(
   core.debug(JSON.stringify(reply.data))
   core.info(
     `Source workflow: Head repo: ${sourceRun.head_repository.full_name}, ` +
-      `Head branch: ${sourceRun.head_branch} ` +
-      `Event: ${sourceRun.event}, Head sha: ${sourceRun.head_sha}, url: ${sourceRun.url}`
+    `Head branch: ${sourceRun.head_branch} ` +
+    `Event: ${sourceRun.event}, Head sha: ${sourceRun.head_sha}, url: ${sourceRun.url}`
   )
   let pullRequest: rest.PullsListResponseItem | null = null
   if (
     sourceRun.event === 'pull_request' ||
-    sourceRun.event === 'pull_request_review'
+    sourceRun.event === 'pull_request_review' ||
+    sourceRun.event === 'issue_comment'
   ) {
     pullRequest = await findPullRequest(
       octokit,
@@ -124,7 +125,7 @@ function verboseOutput(name: string, value: string): void {
 }
 
 async function run(): Promise<void> {
-  const token = core.getInput('token', {required: true})
+  const token = core.getInput('token', { required: true })
   const octokit = new github.GitHub(token)
   const selfRunId = parseInt(getRequiredEnv('GITHUB_RUN_ID'))
   const repository = getRequiredEnv('GITHUB_REPOSITORY')
@@ -145,8 +146,8 @@ async function run(): Promise<void> {
   )
   core.info(
     `Repository: ${repository}, Owner: ${owner}, Repo: ${repo}, ` +
-      `Event name: ${eventName},` +
-      `sourceWorkflowId: ${sourceWorkflowId}, sourceRunId: ${sourceRunId}, selfRunId: ${selfRunId}, `
+    `Event name: ${eventName},` +
+    `sourceWorkflowId: ${sourceWorkflowId}, sourceRunId: ${sourceRunId}, selfRunId: ${selfRunId}, `
   )
 
   const [
